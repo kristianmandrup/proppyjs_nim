@@ -5,14 +5,15 @@ when not defined(js):
   {.error: "ProppyJS.nim is only available for the JS target" .}
 
 type
-  Provider = JsObject
-  Observer = JsObject
-  Prop = JsObject
-  State = JsObject
-  Action = JsObject
+  Provider* = JsObject
+  Observer* = JsObject
+  Prop* = JsObject
+  State* = JsObject
+  Action* = JsObject
 
-var ProppyRx {.importjs nodecl.}
+var ProppyRx* {.importjs nodecl.}
 
+{.push importcpp .}
 proc withProps*(props: seq[Prop])
 proc withProps*((currentProps: seq[Prop], providers: seq[Provider]) => props)
 
@@ -35,3 +36,4 @@ proc emit((cb: auto, props: seq[Prop], providers: seq[Provider]) => {})
 proc handleReceivedProps(on: bool): auto
 proc handleReceivedProps(proc(receivedProps: seq[Prop]): JsObject)
 proc create(options: JsObject): auto
+{.pop.}
